@@ -1,0 +1,25 @@
+workflows:
+  android-app:
+    name: Build Android App
+    instance_type: mac_mini_m1
+    max_build_duration: 60
+    environment:
+      vars:
+        PACKAGE_NAME: "com.example.app"  # پکیج نیم اپلیکیشن خودت رو تنظیم کن
+      java: 17
+      flutter: stable
+    scripts:
+      - name: Checkout repository
+        script: git clone $CM_REPO_LINK
+      - name: Set up Flutter
+        script: flutter doctor
+      - name: Get dependencies
+        script: flutter pub get
+      - name: Build APK
+        script: flutter build apk --release
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
+    publishing:
+      email:
+        recipients:
+          - "saeid.nazari69@gmail.com
